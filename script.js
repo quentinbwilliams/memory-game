@@ -1,7 +1,6 @@
 const gameContainer = document.getElementById("game");
 let card1 = null;
 let card2 = null;
-let selections = [];
 let firstMoveOfTurn = true;
 let preventClick = false;
 
@@ -56,7 +55,6 @@ function handleCardClick(e) {
   if (firstMoveOfTurn) {
     card1 = e.target;
     card1Value = card1.classList.value;
-    selections.push(card1Value);
     giveBackgroundColor(e);
     firstMoveOfTurn = false;
     return;
@@ -65,15 +63,13 @@ function handleCardClick(e) {
   firstMoveOfTurn = true;
   card2 = e.target;
   card2Value = card2.classList.value;
-  selections.push(card2Value);
   giveBackgroundColor(e);
   setTimeout(function () {
-    checkIfCardsMatch(selections);
+    checkIfCardsMatch();
     if (!match) {
       removeBackgroundColor();
     }
     preventClick = false;
-    selections = [];
   }, 1000);
   return;
 }
@@ -88,10 +84,10 @@ function removeBackgroundColor() {
   card2.style.backgroundColor = "";
 }
 
-function checkIfCardsMatch(selections) {
+function checkIfCardsMatch() {
   if (card1 === card2) {
     return (match = false);
-  } else if (selections[0] === selections[1]) {
+  } else if (card1Value === card2Value) {
     return (match = true);
   }
   return (match = false);
