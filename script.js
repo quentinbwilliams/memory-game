@@ -3,6 +3,7 @@ let card1 = null;
 let card2 = null;
 let firstMoveOfTurn = true;
 let preventClick = false;
+let matchedCards = [];
 
 const COLORS = [
   "red",
@@ -51,6 +52,7 @@ function createDivsForColors(colorArray) {
 createDivsForColors(shuffledColors);
 
 function handleCardClick(e) {
+  if (matchedCards.includes(e.target)) return;
   if (preventClick) return;
   if (firstMoveOfTurn) {
     card1 = e.target;
@@ -88,6 +90,7 @@ function checkIfCardsMatch() {
   if (card1 === card2) {
     return (match = false);
   } else if (card1Value === card2Value) {
+    matchedCards.push(card1, card2);
     return (match = true);
   }
   return (match = false);
